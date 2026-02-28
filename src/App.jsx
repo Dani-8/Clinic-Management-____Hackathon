@@ -1,4 +1,13 @@
-import { useState } from 'react'
+import { useState } from 'react'// instead of old imports
+import { app } from './lib/firebase/app';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from './lib/firebase/auth';
+import { db, doc, setDoc, getDoc, collection, addDoc, getDocs, query, orderBy, where, onSnapshot, updateDoc, deleteDoc } from './lib/firebase/db';
+import { generateClinicalPDF } from './lib/pdf/generateClinicalPDF';
+import { Modal } from './components/common/Modal';
+import { LoadingScreen } from './components/common/LoadingScreen';
+import { Sidebar } from './components/common/Sidebar';
+
+
 import './App.css'
 
 function App() {
