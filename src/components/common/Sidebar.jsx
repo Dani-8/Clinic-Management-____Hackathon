@@ -1,15 +1,11 @@
+// src/components/common/Sidebar.jsx
 import React from 'react';
 import {
-    LayoutDashboard,
-    Users,
-    Calendar,
-    FileText,
-    LogOut,
-    Activity
+    LayoutDashboard, Users, Calendar, FileText, LogOut, Activity
 } from 'lucide-react';
 import { signOut } from '../../lib/firebase/auth';   // ← import from your new auth file
 
-const Sidebar = ({ role, activeTab, setActiveTab }) => {
+export default function Sidebar({ role, activeTab, setActiveTab }) {
     const menuGroups = {
         admin: [
             { id: 'Dashboard', icon: LayoutDashboard },
@@ -17,18 +13,20 @@ const Sidebar = ({ role, activeTab, setActiveTab }) => {
         ],
         doctor: [
             { id: 'Dashboard', icon: LayoutDashboard },
-            { id: 'Patients', icon: ClipboardList },
+            { id: 'Patients', icon: FileText },          // changed icon to match original
             { id: 'Appointments', icon: Calendar }
         ],
         receptionist: [
             { id: 'Appointments', icon: Calendar },
-            { id: 'Patients', icon: UserPlus }
+            { id: 'Patients', icon: Users }
         ],
         patient: [
             { id: 'Dashboard', icon: LayoutDashboard },
             { id: 'Prescriptions', icon: FileText }
         ]
     };
+
+    const menuItems = menuGroups[role] || [];
 
     return (
         <aside className="w-72 bg-white border-r border-slate-100 h-screen sticky top-0 flex flex-col p-8">
@@ -40,7 +38,7 @@ const Sidebar = ({ role, activeTab, setActiveTab }) => {
             </div>
 
             <nav className="flex-1 space-y-2">
-                {menuGroups[role]?.map(item => (
+                {menuItems.map(item => (
                     <button
                         key={item.id}
                         onClick={() => setActiveTab(item.id)}
@@ -64,6 +62,4 @@ const Sidebar = ({ role, activeTab, setActiveTab }) => {
             </button>
         </aside>
     );
-};
-
-export default Sidebar;
+}
