@@ -73,6 +73,7 @@ function AppContent() {
           <div className="animate-in slide-in-from-left-4 duration-300">
             <h1 className="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">{activeTab}</h1>
             <p className="text-slate-900 font-extrabold text-lg">Practice Management</p>
+            <HeaderUserInfo />
           </div>
           <div className="flex items-center gap-5 animate-in slide-in-from-right-4 duration-300">
             <div className="text-right hidden md:block">

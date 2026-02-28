@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/auth/AuthProvider';
 import { db, collection, query, where, onSnapshot, addDoc, getDocs } from '../../lib/firebase/db';
 import { Modal } from '../common/Modal';
+import { LoadingScreen } from '../common/LoadingScreen';
 import {
     Calendar, Clock, CheckCircle, AlertCircle, Loader2, Activity
 } from 'lucide-react';
@@ -79,7 +80,7 @@ export default function PatientDashboard() {
         }
     };
 
-    if (loading) return <div>Loading appointments...</div>; // you can use LoadingScreen here
+    if (loading) return <LoadingScreen />;
 
     return (
         <div className="p-8 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -94,9 +95,16 @@ export default function PatientDashboard() {
                     <p className="opacity-80 mt-3 text-lg font-medium max-w-md">
                         Your health dashboard is active. Track your appointments and status here.
                     </p>
-                    {/* ... rest of the welcome banner ... */}
+                    <div className="mt-8 flex gap-4">
+                        <div className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/10">
+                            <p className="text-[10px] font-bold uppercase opacity-60">Account</p>
+                            <p className="font-bold flex items-center gap-2 mt-1">
+                                <CheckCircle size={14} className="text-emerald-400" /> Health Verified
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                {/* decorative blob */}
+                <div className="absolute top-[-20%] right-[-10%] w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-1 gap-10">
@@ -115,8 +123,30 @@ export default function PatientDashboard() {
 
                     <div className="space-y-6">
                         {appointments.map(app => (
-                            <div key={app.id} className="group p-6 bg-slate-50/50 rounded-3xl border border-slate-50 flex justify-between items-center hover:bg-white hover:shadow-xl transition-all duration-300">
-                                {/* ... appointment card content ... */}
+                            <div
+                                key={app.id}
+                                className="group p-6 bg-slate-50/50 rounded-3xl border border-slate-50 flex justify-between items-center hover:bg-white hover:shadow-xl transition-all duration-300"
+                            >
+                                <div className="flex items-center gap-4">
+                                    <div
+                                        className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${app.status === 'confirmed' ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-emerald-600'
+                                            }`}
+                                    >
+                                        <Clock size={24} />
+                                    </div>
+                                    <div>
+                                        <p className="font-extrabold text-slate-800 text-lg">Dr. {app.doctorName}</p>
+                                        <p className="text-sm text-slate-400 font-bold">
+                                            {new Date(app.date).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${app.status === 'confirmed' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+                                        }`}
+                                >
+                                    {app.status}
+                                </div>
                             </div>
                         ))}
 
@@ -129,7 +159,6 @@ export default function PatientDashboard() {
                 </div>
             </div>
 
-            {/* Booking Modal */}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Request New Appointment">
                 {bookingStatus === 'success' ? (
                     <div className="py-12 flex flex-col items-center text-center animate-in zoom-in-95 duration-300">
@@ -141,8 +170,48 @@ export default function PatientDashboard() {
                     </div>
                 ) : (
                     <div className="space-y-6">
-                        {/* doctor select, date input, notes textarea, submit button */}
-                        {/* ... paste your original modal form content here ... */}
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Select Doctor</label>
+                            <select
+                                className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition appearance-none"
+                                value={selectedDoctorId}
+                                onChange={(e) => setSelectedDoctorId(e.target.value)}
+                            >
+                                <option value="">Choose a specialist...</option>
+                                {doctors.map(d => (
+                                    <option key={d.uid} value={d.uid}>Dr. {d.name}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Preferred Date & Time</label>
+                            <input
+                                type="datetime-local"
+                                className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition"
+                                value={appDate}
+                                onChange={(e) => setAppDate(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Brief Description</label>
+                            <textarea
+                                className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition min-h-[100px]"
+                                placeholder="Reason for visit (e.g., General checkup, flu symptoms...)"
+                                value={appNotes}
+                                onChange={(e) => setAppNotes(e.target.value)}
+                            />
+                        </div>
+
+                        <button
+                            disabled={bookingStatus === 'loading' || !selectedDoctorId || !appDate}
+                            onClick={handleRequestAppointment}
+                            className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-lg shadow-blue-100 hover:bg-blue-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
+                        >
+                            {bookingStatus === 'loading' && <Loader2 size={18} className="animate-spin" />}
+                            {bookingStatus === 'loading' ? 'Sending Request...' : 'Send Request'}
+                        </button>
                     </div>
                 )}
             </Modal>

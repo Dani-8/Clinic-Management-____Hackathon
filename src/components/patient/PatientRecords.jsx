@@ -3,9 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/auth/AuthProvider';
 import { db, collection, query, where, onSnapshot, orderBy } from '../../lib/firebase/db';
 import { generateClinicalPDF } from '../../lib/pdf/generateClinicalPDF';
-import {
-    Activity, Download, Stethoscope, FileText, Loader2
-} from 'lucide-react';
+import { Activity, Download, Stethoscope, FileText, Loader2 } from 'lucide-react';
+import { LoadingScreen } from '../common/LoadingScreen';
 
 export default function PatientRecords() {
     const { user } = useAuth();
@@ -34,13 +33,7 @@ export default function PatientRecords() {
         return () => unsubscribe();
     }, [user]);
 
-    if (loading) {
-        return (
-            <div className="p-20 flex justify-center">
-                <Loader2 className="animate-spin text-blue-600" size={40} />
-            </div>
-        );
-    }
+    if (loading) return <LoadingScreen />;
 
     return (
         <div className="p-8 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">

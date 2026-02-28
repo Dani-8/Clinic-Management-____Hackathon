@@ -61,10 +61,75 @@ export default function MyPatients() {
         }
     };
 
-    // Paste your original return JSX here (patient cards grid + Modal)
     return (
         <div className="p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            {/* ... your original patient list + modal JSX ... */}
+            <div className="mb-10">
+                <h2 className="text-3xl font-bold text-slate-900">Patient Directory</h2>
+                <p className="text-slate-400 font-medium">
+                    {user.role === 'doctor' ? 'Your active patient list' : 'Full clinic patient directory'}
+                </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {patients.map(p => (
+                    <div
+                        key={p.id}
+                        className="group bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-blue-50/50 hover:border-blue-200 transition-all duration-300 cursor-pointer"
+                        onClick={() => setSelectedPatient(p)}
+                    >
+                        <div className="flex justify-between items-start mb-6">
+                            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center font-bold text-blue-600 text-xl group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                {p.name?.[0] || 'P'}
+                            </div>
+                            <div className="bg-slate-50 px-3 py-1 rounded-full text-[10px] font-black uppercase text-slate-400 tracking-widest">
+                                Profile
+                            </div>
+                        </div>
+                        <h3 className="font-bold text-xl text-slate-800 mb-1">{p.name}</h3>
+                        <p className="text-slate-400 text-sm mb-4 font-medium">
+                            {(p.age !== undefined && p.age !== null) ? p.age : 'N/A'} Yrs • {p.gender || 'Not set'}
+                        </p>
+                        <div className="pt-4 border-t border-slate-50 flex items-center justify-between">
+                            <span className="text-[10px] font-bold text-slate-300 uppercase">
+                                Last: {p.lastVisit ? new Date(p.lastVisit).toLocaleDateString() : 'Never'}
+                            </span>
+                            <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-blue-600 group-hover:translate-x-1 transition-transform">
+                                <ChevronRight size={16} />
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <Modal isOpen={!!selectedPatient} onClose={() => setSelectedPatient(null)} title={`Clinical Record: ${selectedPatient?.name}`}>
+                <div className="space-y-6">
+                    <div className="bg-blue-50 p-4 rounded-2xl flex items-start gap-3">
+                        <AlertCircle className="text-blue-600 mt-1" size={18} />
+                        <p className="text-sm text-blue-800 leading-relaxed font-medium">
+                            {user.role === 'doctor'
+                                ? 'Entering a new prescription will notify the patient.'
+                                : 'Entering clinical notes will be shared with the patient as a formal record.'}
+                        </p>
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
+                            {user.role === 'doctor' ? 'Clinical Notes & Prescription' : 'Clinical Visit Notes'}
+                        </label>
+                        <textarea
+                            className="w-full p-5 bg-slate-50 border border-slate-100 rounded-3xl min-h-[180px] outline-none focus:ring-2 focus:ring-blue-500 transition text-slate-700 leading-relaxed"
+                            placeholder={user.role === 'doctor' ? "Detailed findings, diagnosis, and medications..." : "Observation notes, instructions, or follow-up details..."}
+                            value={prescriptionText}
+                            onChange={(e) => setPrescriptionText(e.target.value)}
+                        />
+                    </div>
+                    <button
+                        onClick={handlePrescribe}
+                        className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-lg shadow-blue-100 hover:bg-blue-700 transition"
+                    >
+                        Save & Finalize Record
+                    </button>
+                </div>
+            </Modal>
         </div>
     );
 }
