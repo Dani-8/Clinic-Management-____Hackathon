@@ -8,8 +8,8 @@ function App() {
 
   return (
     <>
-      <p className="">
-        Click on the Vite and React logos to learn more
+      <p className="text-center text-lg font-semibold text-rose-500 mt-60">
+        Project is in development, pls wait for the next commit, thanks you
       </p>
     </>
   )
