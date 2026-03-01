@@ -1,7 +1,10 @@
-// src/components/admin/StaffDirectory.jsx
 import React, { useState, useEffect } from 'react';
 import { db, collection, query, onSnapshot } from '../../lib/firebase/db';
 import { Activity, Stethoscope, ShieldCheck, User as UserIcon, Loader2 } from 'lucide-react';
+
+// =============================================
+// =============================================
+// =============================================
 
 export default function StaffDirectory() {
     const [staff, setStaff] = useState([]);
@@ -22,6 +25,8 @@ export default function StaffDirectory() {
 
         return () => unsubscribe();
     }, []);
+
+
 
     return (
         <div className="p-8 animate-in fade-in duration-500">

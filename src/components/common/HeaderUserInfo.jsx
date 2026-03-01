@@ -1,4 +1,3 @@
-// src/components/common/HeaderUserInfo.jsx
 import React from 'react';
 import { User as UserIcon, LogOut } from 'lucide-react';
 import { useAuth } from '../../features/auth/AuthProvider';
