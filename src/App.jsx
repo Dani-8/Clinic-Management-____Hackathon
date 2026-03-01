@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-
-import { getAuth } from 'firebase/auth';
-import { app } from './lib/firebase/app';
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from './lib/firebase/auth';
-import { db, doc, setDoc, getDoc, collection, addDoc, getDocs, query, orderBy, where, onSnapshot, updateDoc, deleteDoc } from './lib/firebase/db';
-
-import { generateClinicalPDF } from './lib/pdf/generateClinicalPDF';
-
-import { Modal } from './components/common/Modal';
 import { LoadingScreen } from './components/common/LoadingScreen';
 import Sidebar from './components/common/Sidebar';
 import HeaderUserInfo from './components/common/HeaderUserInfo';
@@ -23,13 +14,9 @@ import MyPatients from './components/doctor/MyPatients';
 
 import AppointmentManager from './components/receptionist/AppointmentManager';
 
-
 import { AuthProvider, useAuth } from './features/auth/AuthProvider';
 import LoginForm from './features/auth/LoginForm';
 
-
-
-import './App.css'
 
 // ===================================================================================
 // ===================================================================================
