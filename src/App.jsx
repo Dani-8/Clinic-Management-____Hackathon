@@ -39,12 +39,14 @@ function AppContent() {
   const { user, loading } = useAuth();
   const [activeTab, setActiveTab] = useState('Dashboard');
 
+
   useEffect(() => {
     if (user?.role === 'receptionist') setActiveTab('Appointments');
   }, [user]);
 
   if (loading) return <LoadingScreen />;
   if (!user) return <LoginForm />;
+
 
   const renderScreen = () => {
     switch (user.role) {
@@ -65,7 +67,9 @@ function AppContent() {
           </div>
         );
     }
-  };
+  }
+
+
 
   return (
     <div className="flex bg-[#fbfcfd] min-h-screen">
@@ -75,6 +79,7 @@ function AppContent() {
         setActiveTab={setActiveTab}
       />
       <main className="flex-1 overflow-y-auto h-screen">
+
         <header className="h-24 bg-white/80 backdrop-blur-md border-b border-slate-50 px-10 flex justify-between items-center sticky top-0 z-40">
           <div className="animate-in slide-in-from-left-4 duration-300">
             <h1 className="text-slate-700 font-extrabold text-lg uppercase">
@@ -87,39 +92,19 @@ function AppContent() {
         <div className="max-w-7xl mx-auto">
           {renderScreen()}
         </div>
+
       </main>
     </div>
   );
 }
 
 // ===================================================================================
-// ===================================================================================
-// ===================================================================================
+
 export default function App() {
   return (
-    
+
     <AuthProvider>
-    {/* <p className="text-center text-lg font-semibold text-rose-500 mt-1">
-      Project is in development, pls wait for the next commit, thanks you
-    </p> */}
       <AppContent />
     </AuthProvider>
   );
 }
-// ===================================================================================
-// ===================================================================================
-// ===================================================================================
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <p className="text-center text-lg font-semibold text-rose-500 mt-60">
-//         Project is in development, pls wait for the next commit, thanks you
-//       </p>
-//     </>
-//   )
-// }
-
-// export default App
