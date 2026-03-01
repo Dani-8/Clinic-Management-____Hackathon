@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import LandingPage from './components/landing/LandingPage';
+
 import { LoadingScreen } from './components/common/LoadingScreen';
 import Sidebar from './components/common/Sidebar';
 import HeaderUserInfo from './components/common/HeaderUserInfo';
@@ -23,7 +25,8 @@ import LoginForm from './features/auth/LoginForm';
 // ===================================================================================
 
 function AppContent() {
-  const { user, loading } = useAuth();
+  const { user, loading } = useAuth()
+  const [showLanding, setShowLanding] = useState(true)
   const [activeTab, setActiveTab] = useState('Dashboard');
 
 
@@ -31,6 +34,10 @@ function AppContent() {
     if (user?.role === 'receptionist') setActiveTab('Appointments');
   }, [user]);
 
+  if (showLanding) {
+    return <LandingPage onLaunch={() => setShowLanding(false)} />;
+  }
+  
   if (loading) return <LoadingScreen />;
   if (!user) return <LoginForm />;
 
