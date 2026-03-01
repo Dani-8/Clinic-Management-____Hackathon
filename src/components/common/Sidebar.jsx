@@ -46,7 +46,7 @@ export default function Sidebar({ role, activeTab, setActiveTab }) {
                     <button
                         key={item.id}
                         onClick={() => setActiveTab(item.id)}
-                        className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-200 font-semibold text-sm ${activeTab === item.id
+                        className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-200 font-semibold text-sm duration-300 active:scale-[0.95] ${activeTab === item.id
                                 ? 'bg-blue-600 text-white shadow-xl shadow-blue-100'
                                 : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600 cursor-pointer'
                             }`}
@@ -59,7 +59,7 @@ export default function Sidebar({ role, activeTab, setActiveTab }) {
 
             <button
                 onClick={() => signOut(auth)}
-                className="cursor-pointer flex items-center gap-4 px-5 py-4 text-slate-400 rounded-2xl hover:text-red-500 hover:bg-red-100/60 transition-colors text-sm font-bold mt-auto"
+                className="cursor-pointer flex items-center gap-4 px-5 py-4 text-slate-400 rounded-2xl hover:text-red-500 hover:bg-red-100/60 transition-colors text-sm font-bold mt-auto  active:scale-[0.95]"
             >
                 <LogOut size={20} />
                 Logout

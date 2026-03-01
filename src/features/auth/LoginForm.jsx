@@ -94,7 +94,7 @@ export default function LoginForm() {
     return (
         <div className="min-h-screen flex bg-white font-sans overflow-hidden">
             {/* Left Branding Panel */}
-            <div className="hidden lg:flex lg:w-1/2 bg-blue-600 relative items-center justify-center p-12">
+            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-tr from-sky-500 via-blue-500 to-indigo-700 relative items-center justify-center p-12">
                 <div className="relative z-10 text-white max-w-lg">
                     <div className="flex items-center gap-3 mb-8">
                         <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl">
