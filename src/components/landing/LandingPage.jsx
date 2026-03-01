@@ -130,15 +130,15 @@ export default function LandingPage({ onLaunch }) {
                             <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-xl shadow-blue-100 animate-float">
                                 <Sparkles className="text-white" size={20} />
                             </div>
-                            <span className="text-blue-600 font-bold text-xs uppercase tracking-[0.4em]">Core Engine</span>
+                            <span className="text-blue-600 font-bold text-xs uppercase tracking-[0.4em]">How it works</span>
                         </div>
 
                         <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1] mb-8">
-                            Digital <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700 animate-gradient-x">Care Cycle.</span>
+                            The Simple <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700 animate-gradient-x">Flow.</span>
                         </h1>
                         <p className="text-slate-500 text-lg font-medium max-w-sm leading-relaxed mb-10">
-                            Automating the medical journey with real-time data sync and clinical records.
+                            A faster way to manage your health and medical records online.
                         </p>
 
                         <div className="flex flex-wrap gap-4">
@@ -149,7 +149,7 @@ export default function LandingPage({ onLaunch }) {
                                 Launch App
                                 <ChevronRight size={18} className="group-hover:translate-x-2 transition-transform" />
                             </button>
-                            <div className="flex items-center gap-3 px-5 py-3 rounded-xl border border-slate-100 bg-white shadow-sm">
+                            <div className="flex items-center gap-3 px-5 py-3 rounded-xl border border-slate-100">
                                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
                                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Active System</span>
                             </div>
@@ -170,7 +170,7 @@ export default function LandingPage({ onLaunch }) {
 
             <style dangerouslySetInnerHTML={{
                 __html: `
-        @keyframes ping-slow { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(1.5); opacity: 0; } }
+        @keyframes ping-slow { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(1.7); opacity: 0; } }
         .animate-ping-slow { animation: ping-slow 2s infinite cubic-bezier(0, 0, 0.2, 1); }
       `}} />
         </div>
