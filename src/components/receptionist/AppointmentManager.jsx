@@ -1,13 +1,15 @@
-// src/components/receptionist/AppointmentManager.jsx
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/auth/AuthProvider';
 import {
     db, collection, query, orderBy, where, onSnapshot, addDoc, updateDoc, deleteDoc, doc, getDocs
 } from '../../lib/firebase/db';
+
 import { Modal } from '../common/Modal';
-import {
-    Calendar, Plus, Check, XCircle, Loader2, Clock
-} from 'lucide-react';
+import { Calendar, Plus, Check, XCircle, Loader2, Clock } from 'lucide-react';
+
+// ===========================================================
+// ===========================================================
+// ===========================================================
 
 export default function AppointmentManager() {
     const { user } = useAuth();
@@ -33,9 +35,11 @@ export default function AppointmentManager() {
 
         const unsubscribe = onSnapshot(q, (snap) => {
             let data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
             if (user.role === 'doctor') {
                 data = data.sort((a, b) => new Date(b.date) - new Date(a.date));
             }
+
             setAppointments(data);
             setLoading(false);
         }, (err) => {
@@ -43,14 +47,16 @@ export default function AppointmentManager() {
             setLoading(false);
         });
 
+
         return () => unsubscribe();
     }, [user]);
 
     const openNewAppModal = async () => {
         setIsModalOpen(true);
-        const docQuery = query(collection(db, 'artifacts', appId, 'public', 'data', 'doctors'));
-        const patQuery = query(collection(db, 'artifacts', appId, 'public', 'data', 'patients'));
-        const [docSnap, patSnap] = await Promise.all([getDocs(docQuery), getDocs(patQuery)]);
+        const docQuery = query(collection(db, 'artifacts', appId, 'public', 'data', 'doctors'))
+        const patQuery = query(collection(db, 'artifacts', appId, 'public', 'data', 'patients'))
+        const [docSnap, patSnap] = await Promise.all([getDocs(docQuery), getDocs(patQuery)])
+
         setDoctors(docSnap.docs.map(d => d.data()));
         setPatients(patSnap.docs.map(p => ({ id: p.id, ...p.data() })));
     };
@@ -67,6 +73,7 @@ export default function AppointmentManager() {
         }
     };
 
+    
     const handleCreateAppointment = async () => {
         if (!formData.patientId || !formData.doctorId || !formData.date) return;
         setSubmitting(true);

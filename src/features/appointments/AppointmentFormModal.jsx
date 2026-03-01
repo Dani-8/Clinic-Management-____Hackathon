@@ -1,4 +1,3 @@
-// src/features/appointments/AppointmentFormModal.jsx
 import React from 'react';
 import { Modal } from '../../components/common/Modal';
 

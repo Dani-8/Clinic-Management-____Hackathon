@@ -1,4 +1,3 @@
-// src/components/patient/BookAppointmentModal.jsx
 import React from 'react';
 import { Modal } from '../common/Modal';
 import { CheckCircle, Loader2 } from 'lucide-react';

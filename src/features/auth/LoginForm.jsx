@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
-import { 
-  Activity, 
-  AlertCircle, 
-  Loader2, 
-  Mail, 
-  Lock, 
-  User, 
-  ChevronRight,
-  Stethoscope
+import {
+    Activity,
+    AlertCircle,
+    Loader2,
+    Mail,
+    Lock,
+    User,
+    ChevronRight,
+    Stethoscope
 } from 'lucide-react';
+
 import {
     auth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword
 } from '../../lib/firebase/auth';
+
 import { db, doc, setDoc } from '../../lib/firebase/db';
+
+// ===========================================================
+// ===========================================================
+// ===========================================================
 
 export default function LoginForm() {
     const [isLogin, setIsLogin] = useState(true);
@@ -183,11 +189,10 @@ export default function LoginForm() {
                                                 key={r}
                                                 type="button"
                                                 onClick={() => setRole(r)}
-                                                className={`py-2 text-[11px] font-bold uppercase tracking-tighter rounded-xl border transition duration-500 cursor-pointer ${
-                                                    role === r 
-                                                    ? 'bg-blue-600 border-blue-600 text-white shadow-md' 
-                                                    : 'bg-white border-slate-200 text-slate-500 hover:border-blue-300'
-                                                }`}
+                                                className={`py-2 text-[11px] font-bold uppercase tracking-tighter rounded-xl border transition duration-500 cursor-pointer ${role === r
+                                                        ? 'bg-blue-600 border-blue-600 text-white shadow-md'
+                                                        : 'bg-white border-slate-200 text-slate-500 hover:border-blue-300'
+                                                    }`}
                                             >
                                                 {r}
                                             </button>

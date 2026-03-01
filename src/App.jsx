@@ -77,10 +77,9 @@ function AppContent() {
       <main className="flex-1 overflow-y-auto h-screen">
         <header className="h-24 bg-white/80 backdrop-blur-md border-b border-slate-50 px-10 flex justify-between items-center sticky top-0 z-40">
           <div className="animate-in slide-in-from-left-4 duration-300">
-            <h1 className="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">
+            <h1 className="text-slate-700 font-extrabold text-lg uppercase">
               {activeTab}
             </h1>
-            <p className="text-slate-900 font-extrabold text-lg">Practice Management</p>
           </div>
           <HeaderUserInfo />
         </header>

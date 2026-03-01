@@ -1,4 +1,3 @@
-// src/features/patients/PatientList.jsx
 import React from 'react';
 import PatientCard from './PatientCard';
 import { Activity } from 'lucide-react';

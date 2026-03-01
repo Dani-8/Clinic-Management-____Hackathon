@@ -1,4 +1,3 @@
-// src/features/patients/PatientCard.jsx
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
 

@@ -1,4 +1,3 @@
-// src/features/prescriptions/PrescriptionList.jsx
 import React from 'react';
 import PrescriptionCard from './PrescriptionCard';
 import { Activity } from 'lucide-react';

@@ -4,6 +4,5 @@ import { app } from "./app";
 const db = getFirestore(app);
 
 export {
-    db,
-    doc, setDoc, getDoc, collection, addDoc, getDocs, query, orderBy, where, onSnapshot, updateDoc, deleteDoc
+    db, doc, setDoc, getDoc, collection, addDoc, getDocs, query, orderBy, where, onSnapshot, updateDoc, deleteDoc
 };

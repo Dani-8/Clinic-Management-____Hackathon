@@ -1,9 +1,11 @@
-// src/components/doctor/MyPatients.jsx
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/auth/AuthProvider';
 import { db, collection, query, where, onSnapshot, addDoc, updateDoc, doc } from '../../lib/firebase/db';
 import { Modal } from '../common/Modal';
 import { Activity, AlertCircle, ChevronRight, Loader2 } from 'lucide-react';
+
+// ===========================================================
+// ===========================================================
 
 export default function MyPatients() {
     const { user } = useAuth();
@@ -19,7 +21,7 @@ export default function MyPatients() {
         const patQ = collection(db, 'artifacts', appId, 'public', 'data', 'patients');
 
         if (user.role === 'doctor') {
-            // Doctor: only patients from their appointments
+            
             const apptQ = query(
                 collection(db, 'artifacts', appId, 'public', 'data', 'appointments'),
                 where('doctorId', '==', user.uid)
@@ -40,7 +42,7 @@ export default function MyPatients() {
 
             return () => unsubscribe();
         } else {
-            // Receptionist (and admin if needed): show ALL patients
+            
             const unsubscribe = onSnapshot(patQ, snap => {
                 const all = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 setPatients(all);

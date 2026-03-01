@@ -1,4 +1,3 @@
-// src/features/appointments/AppointmentTable.jsx
 import React from 'react';
 import { Check, XCircle } from 'lucide-react';
 

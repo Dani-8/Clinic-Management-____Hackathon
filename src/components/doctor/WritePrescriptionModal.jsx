@@ -1,5 +1,4 @@
-// src/components/doctor/WritePrescriptionModal.jsx
-import { Modal } from '../common/Modal';
+import { Modal } from '../common/Modal';    
 
 export default function WritePrescriptionModal({
     isOpen,
@@ -13,7 +12,6 @@ export default function WritePrescriptionModal({
     return (
         <Modal isOpen={isOpen} onClose={onClose} title={`Clinical Record: ${patient?.name}`}>
             <div className="space-y-6">
-                {/* paste your modal content here */}
             </div>
         </Modal>
     );

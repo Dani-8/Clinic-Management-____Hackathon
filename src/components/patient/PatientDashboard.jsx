@@ -1,4 +1,3 @@
-// src/components/patient/PatientDashboard.jsx
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/auth/AuthProvider';
 import { db, collection, query, where, onSnapshot, addDoc, getDocs } from '../../lib/firebase/db';
