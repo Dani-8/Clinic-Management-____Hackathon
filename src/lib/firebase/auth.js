@@ -3,10 +3,4 @@ import { app } from "./app";
 
 const auth = getAuth(app);
 
-export {
-    auth,
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    signOut
-};
+export { auth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut };

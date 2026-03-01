@@ -18,13 +18,6 @@ export default function HeaderUserInfo() {
             <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 border border-slate-100 shadow-sm">
                 <UserIcon size={24} />
             </div>
-            <button
-                onClick={() => signOut()}
-                className="p-2 text-slate-400 hover:text-red-500 transition-colors"
-                title="Logout"
-            >
-                <LogOut size={20} />
-            </button>
         </div>
     );
 }

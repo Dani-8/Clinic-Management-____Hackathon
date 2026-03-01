@@ -17,7 +17,7 @@ export default function DashboardStats() {
         dailyLabels: [], dailyValues: []
     });
 
-    const appId = 'clinic-saas-v1'; // ← keep hardcoded or move to env/const later
+    const appId = 'clinic-saas-v1';
 
     useEffect(() => {
         if (!user) return;
@@ -92,10 +92,54 @@ export default function DashboardStats() {
         ];
     }, [user?.role, data]);
 
-    // Paste your original return JSX here (the grid of cards + Bar chart)
     return (
         <div className="p-8 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            {/* ... your original dashboard JSX ... */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                {kpis.map((stat, i) => (
+                    <div
+                        key={i}
+                        className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm group hover:bg-blue-600 transition-all duration-300"
+                    >
+                        <div className="flex justify-between items-start mb-4">
+                            <stat.icon size={20} className="text-blue-600 group-hover:text-white transition-colors" />
+                        </div>
+                        <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] mb-2 group-hover:text-blue-100 transition-colors">
+                            {stat.label}
+                        </p>
+                        <p className="text-3xl font-black text-slate-900 group-hover:text-white transition-colors">
+                            {stat.value}
+                        </p>
+                    </div>
+                ))}
+            </div>
+
+            <div className="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                <h3 className="font-black text-2xl text-slate-800 mb-8 flex items-center gap-3">
+                    <Activity size={24} className="text-blue-600" />
+                    {user.role === 'admin' ? 'Clinic Overview' : 'Weekly Engagement'}
+                </h3>
+                <div className="h-[350px]">
+                    <Bar
+                        data={{
+                            labels: data.dailyLabels.length > 0 ? data.dailyLabels : ['Jan', 'Feb', 'Mar'],
+                            datasets: [{
+                                label: user.role === 'admin' ? 'Clinic Metrics' : 'Appointments',
+                                data: data.dailyValues.length > 0 ? data.dailyValues : [0, 0, 0],
+                                backgroundColor: ['#3b82f6', '#818cf8', '#6366f1', '#4f46e5', '#4338ca', '#3730a3', '#312e81'],
+                                borderRadius: 16
+                            }]
+                        }}
+                        options={{
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                y: { border: { display: false }, grid: { color: '#f1f5f9' }, beginAtZero: true },
+                                x: { border: { display: false }, grid: { display: false } }
+                            }
+                        }}
+                    />
+                </div>
+            </div>
         </div>
     );
 }

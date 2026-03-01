@@ -1,6 +1,6 @@
 // src/features/auth/AuthProvider.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { onAuthStateChanged } from '../../lib/firebase/auth';
+import { auth, onAuthStateChanged } from '../../lib/firebase/auth';
 import { db, doc, getDoc } from '../../lib/firebase/db';
 
 const AuthContext = createContext();
@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged((firebaseUser) => {
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
             if (firebaseUser) {
                 // Try to get extended profile
                 const profileRef = doc(db, 'artifacts', 'clinic-saas-v1', 'users', firebaseUser.uid, 'profile', 'data');

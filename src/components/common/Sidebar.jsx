@@ -1,9 +1,13 @@
-// src/components/common/Sidebar.jsx
 import React from 'react';
+
 import {
     LayoutDashboard, Users, Calendar, FileText, LogOut, Activity
 } from 'lucide-react';
-import { signOut } from '../../lib/firebase/auth';   // ← import from your new auth file
+
+import { auth, signOut } from '../../lib/firebase/auth';
+
+
+
 
 export default function Sidebar({ role, activeTab, setActiveTab }) {
     const menuGroups = {
@@ -13,7 +17,7 @@ export default function Sidebar({ role, activeTab, setActiveTab }) {
         ],
         doctor: [
             { id: 'Dashboard', icon: LayoutDashboard },
-            { id: 'Patients', icon: FileText },          // changed icon to match original
+            { id: 'Patients', icon: FileText },
             { id: 'Appointments', icon: Calendar }
         ],
         receptionist: [
@@ -44,7 +48,7 @@ export default function Sidebar({ role, activeTab, setActiveTab }) {
                         onClick={() => setActiveTab(item.id)}
                         className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-200 font-semibold text-sm ${activeTab === item.id
                                 ? 'bg-blue-600 text-white shadow-xl shadow-blue-100'
-                                : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'
+                                : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600 cursor-pointer'
                             }`}
                     >
                         <item.icon size={20} />
@@ -54,8 +58,8 @@ export default function Sidebar({ role, activeTab, setActiveTab }) {
             </nav>
 
             <button
-                onClick={() => signOut()}
-                className="flex items-center gap-4 px-5 py-4 text-slate-400 hover:text-red-500 transition-colors text-sm font-bold mt-auto"
+                onClick={() => signOut(auth)}
+                className="cursor-pointer flex items-center gap-4 px-5 py-4 text-slate-400 rounded-2xl hover:text-red-500 hover:bg-red-100/60 transition-colors text-sm font-bold mt-auto"
             >
                 <LogOut size={20} />
                 Logout

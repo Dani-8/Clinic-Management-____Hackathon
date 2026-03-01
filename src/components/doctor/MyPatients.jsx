@@ -14,28 +14,40 @@ export default function MyPatients() {
     const appId = 'clinic-saas-v1';
 
     useEffect(() => {
-        if (!user || user.role !== 'doctor') return;
+        if (!user) return;
 
-        const apptQ = query(
-            collection(db, 'artifacts', appId, 'public', 'data', 'appointments'),
-            where('doctorId', '==', user.uid)
-        );
+        const patQ = collection(db, 'artifacts', appId, 'public', 'data', 'patients');
 
-        const unsubscribe = onSnapshot(apptQ, snap => {
-            const myPatientIds = [...new Set(snap.docs.map(d => d.data().patientId))];
-            if (myPatientIds.length === 0) {
-                setPatients([]);
-                return;
-            }
+        if (user.role === 'doctor') {
+            // Doctor: only patients from their appointments
+            const apptQ = query(
+                collection(db, 'artifacts', appId, 'public', 'data', 'appointments'),
+                where('doctorId', '==', user.uid)
+            );
 
-            const patQ = collection(db, 'artifacts', appId, 'public', 'data', 'patients');
-            onSnapshot(patQ, pSnap => {
-                const all = pSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-                setPatients(all.filter(p => myPatientIds.includes(p.id)));
+            const unsubscribe = onSnapshot(apptQ, snap => {
+                const myPatientIds = [...new Set(snap.docs.map(d => d.data().patientId))];
+                if (myPatientIds.length === 0) {
+                    setPatients([]);
+                    return;
+                }
+
+                onSnapshot(patQ, pSnap => {
+                    const all = pSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    setPatients(all.filter(p => myPatientIds.includes(p.id)));
+                });
             });
-        });
 
-        return () => unsubscribe();
+            return () => unsubscribe();
+        } else {
+            // Receptionist (and admin if needed): show ALL patients
+            const unsubscribe = onSnapshot(patQ, snap => {
+                const all = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                setPatients(all);
+            });
+
+            return () => unsubscribe();
+        }
     }, [user]);
 
     const handlePrescribe = async () => {
